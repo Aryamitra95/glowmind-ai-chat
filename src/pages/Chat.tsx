@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +16,8 @@ import {
   Volume2,
   VolumeX,
   AlertTriangle,
-  Phone
+  Phone,
+  X
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -177,6 +177,10 @@ const Chat = () => {
     }
   };
 
+  const cancelRecording = () => {
+    setIsRecording(false);
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -186,6 +190,62 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#B4FF57] via-purple-200 to-[#FF6EC7]">
+      {/* Listening Overlay */}
+      {isRecording && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-black/30"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="listening-title"
+          aria-describedby="listening-description"
+        >
+          <div className="flex flex-col items-center space-y-8 text-center px-6">
+            {/* Animated Glowing Orb */}
+            <div className="relative">
+              {/* Main Orb */}
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-pulse shadow-2xl">
+                <div className="w-full h-full rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center animate-glow-pulse">
+                  <Mic className="w-12 h-12 md:w-16 md:h-16 text-white animate-pulse" />
+                </div>
+              </div>
+              
+              {/* Outer Glow Ring */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 blur-xl opacity-60 animate-pulse scale-110"></div>
+              
+              {/* Pulsing Ring Animation */}
+              <div className="absolute inset-0 rounded-full border-4 border-white/20 animate-ping"></div>
+            </div>
+            
+            {/* Listening Text */}
+            <div className="space-y-2">
+              <h2 
+                id="listening-title" 
+                className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg"
+              >
+                Listening...
+              </h2>
+              <p 
+                id="listening-description" 
+                className="text-white/80 text-lg md:text-xl"
+              >
+                Speak now, I'm here to listen
+              </p>
+            </div>
+            
+            {/* Cancel Button */}
+            <Button
+              onClick={cancelRecording}
+              variant="ghost"
+              className="backdrop-blur-md bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-3 rounded-full text-lg font-medium transition-all duration-200 hover:scale-105"
+              aria-label="Cancel recording"
+            >
+              <X className="w-5 h-5 mr-2" />
+              Cancel
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Crisis Support Modal */}
       <Dialog open={showCrisisModal} onOpenChange={setShowCrisisModal}>
         <DialogContent className="backdrop-blur-md bg-white/90 border-white/30">
@@ -383,6 +443,7 @@ const Chat = () => {
                 placeholder="Type your message here... or use voice"
                 className="pr-12 backdrop-blur-sm bg-white/50 border-white/50 focus:bg-white/70 text-gray-900 placeholder:text-gray-600"
                 aria-label="Type your message"
+                disabled={isRecording}
               />
             </div>
             
@@ -400,7 +461,7 @@ const Chat = () => {
             
             <Button
               onClick={handleSendMessage}
-              disabled={!inputMessage.trim()}
+              disabled={!inputMessage.trim() || isRecording}
               className="p-3 bg-gray-900 hover:bg-gray-800 text-white disabled:opacity-50"
               aria-label="Send message"
             >
