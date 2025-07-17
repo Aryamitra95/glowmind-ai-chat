@@ -45,7 +45,6 @@ const Chat = () => {
       timestamp: new Date()
     }
   ]);
-  
   const [inputMessage, setInputMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([
@@ -53,7 +52,6 @@ const Chat = () => {
     { id: '2', title: 'Yesterday - Anxiety Chat', lastMessage: 'Thank you for sharing...', timestamp: new Date(Date.now() - 86400000) },
     { id: '3', title: 'Last Week - Sleep Issues', lastMessage: 'Those tips seem helpful...', timestamp: new Date(Date.now() - 604800000) }
   ]);
-  
   const [isTyping, setIsTyping] = useState(false);
   const [showCrisisModal, setShowCrisisModal] = useState(false);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
