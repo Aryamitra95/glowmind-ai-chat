@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { AlertCircle, Eye, EyeOff, Mail, Lock, User, Check, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { account } from "@/lib/appwrite";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
 
   // Password strength calculation
   const getPasswordStrength = (password: string) => {
@@ -93,21 +95,26 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setSuccess(null);
     if (!validateForm()) return;
-
     setIsLoading(true);
-    
     try {
-      // Simulate signup process
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Signup attempt:', formData);
-      
+      // Appwrite signup
+      const user = await account.create(
+        "unique()",
+        formData.email,
+        formData.password,
+        `${formData.firstName} ${formData.lastName}`
+      );
+      console.log('Appwrite user created:', user);
+      // Optionally, log the user in immediately after signup
+      await account.createSession(formData.email, formData.password);
+      setSuccess('Signup successful! Redirecting...');
       // Navigate to chat page on successful signup
-      navigate('/chat');
-    } catch (error) {
-      console.error('Signup error:', error);
-      setErrors({ general: 'Signup failed. Please try again.' });
+      setTimeout(() => navigate('/chat'), 1000);
+    } catch (error: any) {
+      console.error('Signup error (full object):', error);
+      setErrors({ general: error?.message || error?.response?.message || 'Signup failed. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -143,6 +150,14 @@ const Signup = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {success && (
+            <Alert className="bg-green-50/80 border-green-200">
+              <AlertCircle className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-800">
+                {success}
+              </AlertDescription>
+            </Alert>
+          )}
           {errors.general && (
             <Alert className="bg-red-50/80 border-red-200">
               <AlertCircle className="h-4 w-4 text-red-600" />

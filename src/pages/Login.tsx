@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { AlertCircle, Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { account } from "@/lib/appwrite";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -58,15 +59,13 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // Simulate login process
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Login attempt:', formData);
-      
+      // Appwrite login
+      await account.createSession(formData.email, formData.password);
       // Navigate to chat page on successful login
       navigate('/chat');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
-      setErrors({ general: 'Login failed. Please check your credentials and try again.' });
+      setErrors({ general: error?.message || 'Login failed. Please check your credentials and try again.' });
     } finally {
       setIsLoading(false);
     }
