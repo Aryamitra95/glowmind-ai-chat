@@ -1,73 +1,229 @@
-# Welcome to your Lovable project
 
-## Project info
+# GlowMind - Your Mental Health Companion
 
-**URL**: https://lovable.dev/projects/b769271e-2f8a-4a39-9453-60938cb37a14
+GlowMind is a modern, AI-powered mental health support application designed specifically for young adults. It provides personalized guidance, voice chat capabilities, and immediate access to crisis support resources.
 
-## How can I edit this code?
+## 🌟 Features
 
-There are several ways of editing your application.
+### Core Functionality
+- **AI-Powered Conversations**: Intelligent chat responses tailored to mental health support
+- **Voice Integration**: Speak to the AI and receive voice responses
+- **Crisis Detection**: Automatic detection of concerning language with immediate support resources
+- **Conversation History**: Keep track of past sessions and progress
+- **Beautiful UI**: Modern glassmorphism design with smooth animations
 
-**Use Lovable**
+### Authentication & Security
+- **Email/Password Authentication**: Secure user registration and login
+- **Google OAuth Integration**: Quick social login option
+- **Password Strength Validation**: Real-time password requirements checking
+- **Form Validation**: Comprehensive client-side validation with accessibility
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b769271e-2f8a-4a39-9453-60938cb37a14) and start prompting.
+### Design & Accessibility
+- **Responsive Design**: Mobile-first approach that works on all devices
+- **WCAG 2.2 AA Compliance**: Full accessibility support with ARIA labels
+- **High Contrast Support**: Respects user preferences for better visibility
+- **Reduced Motion Support**: Respects user preferences for animations
+- **Keyboard Navigation**: Full keyboard accessibility throughout the app
 
-Changes made via Lovable will be committed automatically to this repo.
+### Crisis Support
+- **Keyword Detection**: Identifies concerning language patterns
+- **Immediate Resources**: Quick access to crisis hotlines and text services
+- **National Suicide Prevention Lifeline**: Direct link to call/text 988
+- **Crisis Text Line**: Direct access to text HOME to 741741
 
-**Use your preferred IDE**
+## 🚀 Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
+- Node.js 18+ and npm
+- Modern web browser with ES2020 support
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
+cd glowmind-chat-oasis
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Environment Setup
 
-**Use GitHub Codespaces**
+Create a `.env.local` file in the root directory:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```env
+# Supabase Configuration (when connected)
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-## What technologies are used for this project?
+# OpenAI Configuration (when implemented)
+VITE_OPENAI_API_KEY=your_openai_api_key
+```
 
-This project is built with:
+**Note**: Never commit API keys to version control. The `.env.local` file is already in `.gitignore`.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🏗️ Architecture
 
-## How can I deploy this project?
+### Tech Stack
+- **Frontend**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with custom design system
+- **UI Components**: shadcn/ui component library
+- **Routing**: React Router DOM
+- **State Management**: React hooks and context
+- **Build Tool**: Vite
+- **Icons**: Lucide React
 
-Simply open [Lovable](https://lovable.dev/projects/b769271e-2f8a-4a39-9453-60938cb37a14) and click on Share -> Publish.
+### Project Structure
+```
+src/
+├── components/          # Reusable UI components
+│   └── ui/             # shadcn/ui components
+├── pages/              # Route components
+│   ├── Index.tsx       # Landing page
+│   ├── Login.tsx       # Authentication
+│   ├── Signup.tsx      # User registration
+│   └── Chat.tsx        # Main chat interface
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── styles/             # Global styles and Tailwind config
+```
 
-## Can I connect a custom domain to my Lovable project?
+### Design System
+- **Primary Color**: `#B4FF57` (Bright lime green)
+- **Secondary Color**: `#FF6EC7` (Bright pink)
+- **Typography**: Inter font family with 600 weight headings
+- **Effects**: Glassmorphism with backdrop blur
+- **Animations**: Smooth transitions and glowing effects
 
-Yes, you can!
+## 🎨 Key Components
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Landing Page (`/`)
+- Hero section with compelling call-to-action
+- Feature showcase with icons and descriptions
+- Social proof through testimonials
+- Crisis support information in footer
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Authentication (`/login`, `/signup`)
+- Email/password forms with validation
+- Google OAuth integration
+- Password strength meter
+- Accessible form design with ARIA labels
+
+### Chat Interface (`/chat`)
+- Glowing orb AI avatar with animations
+- Voice recording and playback
+- Message history with timestamps
+- Crisis detection and modal alerts
+- Conversation sidebar with history
+- Text-to-speech for AI responses
+
+## 🛡️ Security Features
+
+### Frontend Security
+- Input validation and sanitization
+- XSS protection through React's built-in safeguards
+- Content Security Policy headers
+- Secure authentication flow
+
+### Privacy & Data Protection
+- No sensitive data stored in localStorage
+- Secure session management (when backend is connected)
+- Crisis detection runs client-side
+- User conversations encrypted in transit
+
+## ♿ Accessibility
+
+### WCAG 2.2 AA Compliance
+- Color contrast ratios meet AA standards
+- All interactive elements keyboard accessible
+- ARIA labels and roles properly implemented
+- Screen reader announcements for dynamic content
+- Focus management for modals and navigation
+
+### Responsive Design
+- Mobile-first CSS approach
+- Touch-friendly interface elements
+- Optimized for screens as small as 375px
+- Flexible layouts that adapt to any screen size
+
+## 🚨 Crisis Support Integration
+
+### Detection System
+The app monitors for concerning language patterns including:
+- Suicidal ideation keywords
+- Self-harm expressions
+- Crisis language indicators
+
+### Immediate Response
+When crisis language is detected:
+1. Modal appears with emergency resources
+2. National Suicide Prevention Lifeline (988)
+3. Crisis Text Line (HOME to 741741)
+4. Encouraging messaging about getting help
+
+### Always Available
+Crisis support information is prominently displayed in:
+- Footer of all public pages
+- Emergency modal in chat interface
+- Header navigation when appropriate
+
+## 🔮 Future Enhancements
+
+### Backend Integration
+- Supabase authentication setup
+- User data persistence
+- Conversation history storage
+- Real-time chat synchronization
+
+### AI Integration  
+- OpenAI GPT integration for responses
+- Sentiment analysis for better support
+- Personalized conversation paths
+- Crisis escalation protocols
+
+### Advanced Features
+- Group therapy sessions
+- Professional therapist matching
+- Progress tracking and analytics
+- Integration with mental health resources
+
+## 🤝 Contributing
+
+### Development Guidelines
+1. Follow TypeScript best practices
+2. Maintain accessibility standards
+3. Write semantic HTML
+4. Use Tailwind classes consistently
+5. Comment complex logic thoroughly
+
+### Code Style
+- ESLint configuration enforced
+- Prettier for code formatting
+- Consistent naming conventions
+- Component-based architecture
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Support & Crisis Resources
+
+### Immediate Help
+- **National Suicide Prevention Lifeline**: Call or text 988
+- **Crisis Text Line**: Text HOME to 741741
+- **Emergency Services**: Call 911
+
+### Additional Resources
+- [NAMI (National Alliance on Mental Illness)](https://nami.org)
+- [Mental Health America](https://mhanational.org)
+- [Anxiety and Depression Association of America](https://adaa.org)
+
+---
+
+**Important**: This application is designed to provide support and resources but is not a replacement for professional mental health care. If you are experiencing a mental health crisis, please reach out to emergency services or crisis hotlines immediately.
