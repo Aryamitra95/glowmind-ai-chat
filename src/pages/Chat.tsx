@@ -216,7 +216,7 @@ const Chat = () => {
                 Remember: You are not alone, and help is always available.
               </p>
             </DialogDescription>
-          </DialogContent>
+          </DialogHeader>
         </DialogContent>
       </Dialog>
 
